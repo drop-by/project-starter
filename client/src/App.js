@@ -7,20 +7,26 @@ import { store } from "./app/store";
 import { ChakraProvider } from "@chakra-ui/provider";
 
 import "./App.css";
+import DashboardPage from "./pages/dashboard";
 
 const App = () => {
-    return (
-        <Provider store={store}>
-            <ChakraProvider>
-                <Router>
-                    <Switch>
-                        <Route exact path="/" component={LandingPage} />
-                        <Route exact path="/login" component={LoginPage} />
-                    </Switch>
-                </Router>
-            </ChakraProvider>
-        </Provider>
-    );
+	return (
+		<Provider store={store}>
+			<ChakraProvider>
+				<Router>
+					<Switch>
+						<Route exact path="/" component={LandingPage} />
+						<Route exact path="/login" component={LoginPage} />
+						<Route
+							exact
+							path="/dashboard"
+							component={DashboardPage}
+						/>
+					</Switch>
+				</Router>
+			</ChakraProvider>
+		</Provider>
+	);
 };
 
 export default App;
