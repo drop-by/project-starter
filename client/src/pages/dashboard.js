@@ -12,8 +12,10 @@ import {
 import EventCard from "../modules/dashboard/components/EventCard";
 import superagent from "superagent";
 import TempData from "../modules/dashboard/eventData.json";
+import { useHistory } from "react-router";
 
 const Dashboard = () => {
+	const history = useHistory();
 	const [isLoading, setIsLoading] = useState();
 	const [personalCardPos, setPersonalCardPos] = useState({
 		start: 0,
@@ -85,6 +87,7 @@ const Dashboard = () => {
 					<Heading>Feed</Heading>
 					<Grid columnGap={4} templateColumns={"repeat(3, 1fr)"}>
 						<Toggle />
+
 						<IconButton
 							aria-label={"Open Settings"}
 							icon={<SettingsIcon />}
@@ -92,6 +95,7 @@ const Dashboard = () => {
 						<IconButton
 							aria-label={"Search for events"}
 							icon={<SearchIcon />}
+							onClick={() => history.push("/search")}
 						/>
 					</Grid>
 				</Flex>
@@ -108,13 +112,13 @@ const Dashboard = () => {
 						>
 							<IconButton
 								icon={<ChevronLeftIcon />}
-								disabled={personalCardPos.start === 0}
+								disabled={personalCardPos.start - 4 < 0}
 								onClick={() => handlePrevPress("personal")}
 							/>
 							<IconButton
 								icon={<ChevronRightIcon />}
 								disabled={
-									personalCardPos.end >
+									personalCardPos.end + 4 >
 									TempData.personal.items.length
 								}
 								onClick={() => handleNextPress("personal")}
@@ -145,14 +149,14 @@ const Dashboard = () => {
 						>
 							<IconButton
 								icon={<ChevronLeftIcon />}
-								disabled={popularCardPos.start === 0}
+								disabled={popularCardPos.start - 4 < 0}
 								onClick={() => handlePrevPress("popular")}
 							/>
 							<IconButton
 								icon={<ChevronRightIcon />}
 								disabled={
-									popularCardPos.end >
-									TempData.personal.items.length
+									popularCardPos.end + 4 >
+									TempData.popular.items.length
 								}
 								onClick={() => handleNextPress("popular")}
 							/>
