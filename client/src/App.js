@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LandingPage from "./pages/landingPage";
 import LoginPage from "./pages/login";
+import Dashboard from "./pages/dashboard";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 import { ChakraProvider } from "@chakra-ui/provider";
@@ -17,11 +18,7 @@ const App = () => {
 					<Switch>
 						<Route exact path="/" component={LandingPage} />
 						<Route exact path="/login" component={LoginPage} />
-						<Route
-							exact
-							path="/dashboard"
-							component={DashboardPage}
-						/>
+						<Route exact path="/dashboard" component={Dashboard} />
 					</Switch>
 				</Router>
 			</ChakraProvider>

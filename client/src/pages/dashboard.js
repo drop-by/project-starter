@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout } from "../modules/layout";
 import { Stack, Box, Heading, Flex, Grid } from "@chakra-ui/layout";
 import Toggle from "../common/components/ThemeToggle";
@@ -10,7 +10,7 @@ import {
 	ChevronLeftIcon,
 } from "@chakra-ui/icons";
 import EventCard from "../modules/dashboard/components/EventCard";
-
+import superagent from "superagent";
 import TempData from "../modules/dashboard/eventData.json";
 
 const Dashboard = () => {
@@ -35,6 +35,34 @@ const Dashboard = () => {
 				eventImage={el.eventImage}
 			/>
 		));
+	};
+
+	const handleNextPress = (type) => {
+		if (type === "personal") {
+			setPersonalCardPos({
+				start: personalCardPos.start + 4,
+				end: personalCardPos.end + 4,
+			});
+		} else {
+			setPopularCardPos({
+				start: popularCardPos.start + 4,
+				end: popularCardPos.end + 4,
+			});
+		}
+	};
+
+	const handlePrevPress = (type) => {
+		if (type === "personal") {
+			setPersonalCardPos({
+				start: personalCardPos.start - 4,
+				end: personalCardPos.end - 4,
+			});
+		} else {
+			setPopularCardPos({
+				start: popularCardPos.start - 4,
+				end: popularCardPos.end - 4,
+			});
+		}
 	};
 
 	return (
@@ -81,6 +109,7 @@ const Dashboard = () => {
 							<IconButton
 								icon={<ChevronLeftIcon />}
 								disabled={personalCardPos.start === 0}
+								onClick={() => handlePrevPress("personal")}
 							/>
 							<IconButton
 								icon={<ChevronRightIcon />}
@@ -88,6 +117,7 @@ const Dashboard = () => {
 									personalCardPos.end >
 									TempData.personal.items.length
 								}
+								onClick={() => handleNextPress("personal")}
 							/>
 						</Flex>
 					</Flex>
@@ -116,6 +146,7 @@ const Dashboard = () => {
 							<IconButton
 								icon={<ChevronLeftIcon />}
 								disabled={popularCardPos.start === 0}
+								onClick={() => handlePrevPress("popular")}
 							/>
 							<IconButton
 								icon={<ChevronRightIcon />}
@@ -123,14 +154,15 @@ const Dashboard = () => {
 									popularCardPos.end >
 									TempData.personal.items.length
 								}
+								onClick={() => handleNextPress("popular")}
 							/>
 						</Flex>
 					</Flex>
 					<Grid columnGap={4} templateColumns={"repeat(4, 1fr)"}>
 						{renderEvents(
 							TempData.popular.items.slice(
-								personalCardPos.start,
-								personalCardPos.end
+								popularCardPos.start,
+								popularCardPos.end
 							)
 						)}
 					</Grid>
