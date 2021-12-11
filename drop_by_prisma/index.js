@@ -1,8 +1,9 @@
 const express = require('express');
 const session = require('express-session'); // npm install express-session
-
+let cors = require("cors");
 const app = express();
 app.use(express.json());
+app.use(cors());
 app.set('trust proxy', 1);
 app.use(session({
     secret: 'drop_by',
@@ -17,7 +18,7 @@ app.get('/',(req,res)=>{
     res.send('<h1>Hello World</h1>')
 })
 
-app.listen({ port: 8000 }, async () => {
+app.listen({ port: 8080 }, async () => {
     console.log('Server up on http://localhost:8000')
     console.log('Connected!')
 });

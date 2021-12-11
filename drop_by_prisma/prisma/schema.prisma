@@ -41,7 +41,7 @@ model Event{
   event_desc String
   is_online Boolean @default(false)
   capacity Int?
-  taken Int?
+  taken Int? @default(0)
   hit_capacity Boolean? @default(false)
   event_address String?
   event_city String?
