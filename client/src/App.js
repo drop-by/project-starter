@@ -8,21 +8,29 @@ import { store } from "./app/store";
 import { ChakraProvider } from "@chakra-ui/provider";
 // import{ Map } from './src/modules/layout/component/Map.js';
 import "./App.css";
+import DashboardPage from "./pages/dashboard";
+import SearchPage from "./pages/search";
 
 const App = () => {
-    return (
-        <Provider store={store}>
-            <ChakraProvider>
-                <Router>
-                    <Switch>
-                        <Route exact path="/" component={LandingPage} />
-                        <Route exact path="/login" component={LoginPage} />
-                        <Route exact path="/map" component={Map} />
-                    </Switch>
-                </Router>
-            </ChakraProvider>
-        </Provider>
-    );
+	return (
+		<Provider store={store}>
+			<ChakraProvider>
+				<Router>
+					<Switch>
+						<Route exact path="/" component={LandingPage} />
+						<Route exact path="/login" component={LoginPage} />
+						<Route
+							exact
+							path="/dashboard"
+							component={DashboardPage}
+						/>
+						<Route exact path="/search" component={SearchPage} />
+						<Route exact path="/map" component={Map} />
+					</Switch>
+				</Router>
+			</ChakraProvider>
+		</Provider>
+	);
 };
 
 export default App;
