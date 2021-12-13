@@ -10,6 +10,7 @@ import { ChakraProvider } from "@chakra-ui/provider";
 import "./App.css";
 import DashboardPage from "./pages/dashboard";
 import SearchPage from "./pages/search";
+import SignupPage from "./pages/signup";
 
 const App = () => {
 	return (
@@ -19,6 +20,7 @@ const App = () => {
 					<Switch>
 						<Route exact path="/" component={LandingPage} />
 						<Route exact path="/login" component={LoginPage} />
+						<Route exact path="/signup" component={SignupPage} />
 						<Route
 							exact
 							path="/dashboard"

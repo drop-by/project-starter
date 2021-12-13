@@ -38,7 +38,7 @@ const LoginPage = () => {
 			if(res.status==204){
 				setInvalidLogin(true);
 			}else if(res.status==200){
-				setIsSubmitting(false);
+				setIsSubmitting(true);
 				res = res.data;
 				for(let i in res){
 					window.sessionStorage.setItem(i, JSON.stringify(res[i]));
@@ -90,11 +90,8 @@ const LoginPage = () => {
 						bg={"#EC6EAD"}
 						color={"white"}
 						isLoading={isSubmitting}
-						type="submit"
-						// onClick={()=>{
-						// }}
-					>
-						Submit
+						type="submit">
+						Login
 					</Button>
 					{invalidLogin && <Text color={"red"}>Invalid Login</Text>}
 				</Form>
