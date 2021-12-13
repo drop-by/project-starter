@@ -100,7 +100,7 @@ export default function Nav() {
                                         </MenuList>
                                     </MenuButton>
                                 ) : (
-                                    <NavLink text={"Login"} to={"/login"} />
+                                    window.location.pathname==='/login' ? <NavLink text={"Sign Up"} to={"/signup"}/> : <NavLink text={"Login"} to={"/login"}/>
                                 )}
                             </Menu>
                         </Flex>

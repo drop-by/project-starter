@@ -4,7 +4,7 @@ import { Textarea, Button, Stack } from "@chakra-ui/react";
 import { GoogleMap, useLoadScript, Marker, InfoWindow} from "@react-google-maps/api";
 import { SearchBar } from "../modules/layout";
 const libraries = ["places"];
-const google_env = 'AIzaSyBZNc6twCk1spCtVMLCEzldaNeSr5SUIKg';
+const google_env = 'googleAPIKeyHere';
 const mapContainerStyle = {
   height: "100vh",
   width: "100vw",
@@ -18,7 +18,7 @@ const center = {
   lng: 0.0,
 };
 const backendHost = 'http://localhost:8080/';
-const zoom = 15;
+const zoom = 13;
 let def = true;
 const Map = (props)=>{
   const mapRef = React.useRef();

@@ -2,8 +2,9 @@ import React from "react";
 import { Layout } from "../modules/layout";
 import { Box, Stack, Heading, Text, Button } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
-
+import { useHistory } from "react-router";
 const LandingPage = () => {
+    const history = useHistory();
     const user = useSelector((state) => state.user);
     return (
         <Layout>
@@ -33,7 +34,7 @@ const LandingPage = () => {
                 {user ? (
                     <Button>Dashboard</Button>
                 ) : (
-                    <Button>Sign up for free</Button>
+                    <Button onClick={()=> history.push('./signup')}>Sign up for free</Button>
                 )}
             </Stack>
             <Stack></Stack>

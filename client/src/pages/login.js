@@ -11,7 +11,8 @@ import {
 	Input,
 	FormHelperText,
 	FormLabel,
-	Text
+	Text,
+	Link
 } from "@chakra-ui/react";
 import superagent from "superagent";
 import { useHistory } from "react-router";
@@ -25,6 +26,8 @@ const LoginPage = () => {
 	const history = useHistory();
 	if(sessionStorage.getItem('user_id')){
 		history.push("/dashboard");
+	}else{
+		sessionStorage.clear();
 	}
 	const validateLogin = async (email,password)=>{
 		const login_attempt = await axios({
@@ -39,7 +42,8 @@ const LoginPage = () => {
 				setInvalidLogin(true);
 			}else if(res.status==200){
 				setIsSubmitting(true);
-				res = res.data;
+				console.log(res.data.msg);
+				res = res.data.user;
 				for(let i in res){
 					window.sessionStorage.setItem(i, JSON.stringify(res[i]));
 				}
@@ -93,6 +97,7 @@ const LoginPage = () => {
 						type="submit">
 						Login
 					</Button>
+					<Link href='./signup'>Don't have a account?</Link> 
 					{invalidLogin && <Text color={"red"}>Invalid Login</Text>}
 				</Form>
 			</Stack>

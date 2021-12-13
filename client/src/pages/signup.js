@@ -13,7 +13,8 @@ import {
 	FormLabel,
 	Text,
     InputGroup,
-    InputRightElement
+    InputRightElement,
+	Link
 } from "@chakra-ui/react";
 import superagent from "superagent";
 import { useHistory } from "react-router";
@@ -22,22 +23,24 @@ const SignupPage = () => {
 	const history = useHistory();
 	if(sessionStorage.getItem('user_id')){
 		history.push("/dashboard");
+	}else{
+		sessionStorage.clear();
 	}
     const [isSubmitting, setIsSubmitting] = useState(false);
-	const [email, setEmail] = useState("");
-    const [first, setFirst] = useState("");
-    const [last, setLast] = useState("");
-    const [username, setUsername] = useState("");
-    const [dob, setDOB] = useState("");
-    const [phoneNum, setPhoneNum] = useState("");
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [country, setCountry] = useState("");
-    const [zip, setZip] = useState("");
-	const [password, setPassword] = useState("");
+	const [email, setEmail] = useState();
+    const [first, setFirst] = useState();
+    const [last, setLast] = useState();
+    const [username, setUsername] = useState();
+    const [dob, setDOB] = useState();
+    const [phoneNum, setPhoneNum] = useState();
+    const [address, setAddress] = useState();
+    const [city, setCity] = useState();
+    const [state, setState] = useState();
+    const [country, setCountry] = useState();
+    const [zip, setZip] = useState();
+	const [password, setPassword] = useState();
     const [show, setShow] = React.useState(false)
-    const [takenInfo, setTakenInfo] = React.useState("");
+    const [takenInfo, setTakenInfo] = React.useState();
     const handleShow = () => setShow(!show);
 	const createUser = async ()=>{
 		const login_attempt = await axios({
@@ -61,6 +64,10 @@ const SignupPage = () => {
             if(res.status=='203'){
                 setTakenInfo(res.data.msg);
             }else if(res.status=='200'){
+				res = res.data;
+				for(let i in res){
+					window.sessionStorage.setItem(i, JSON.stringify(res[i]));
+				}
                 history.push("/login");
             }
             
@@ -196,6 +203,7 @@ const SignupPage = () => {
 						Signup
 					</Button>
 				</Form>
+				<Link href='./login'>Already have a account?</Link> 
                 {takenInfo!=='' && <Text color={'red.500'}>{takenInfo}</Text>}
 			</Stack>
             

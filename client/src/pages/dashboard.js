@@ -8,6 +8,7 @@ import {
 	SearchIcon,
 	ChevronRightIcon,
 	ChevronLeftIcon,
+	ExternalLinkIcon,
 } from "@chakra-ui/icons";
 import EventCard from "../modules/dashboard/components/EventCard";
 import superagent from "superagent";
@@ -17,6 +18,9 @@ import { useHistory } from "react-router";
 
 const Dashboard = () => {
 	const history = useHistory();
+	if(!sessionStorage.getItem('user_id')){
+		history.push("/login");
+	}
 	const [isLoading, setIsLoading] = useState();
 	const [personalCardPos, setPersonalCardPos] = useState({
 		start: 0,
@@ -86,7 +90,7 @@ const Dashboard = () => {
 					mt={12}
 				>
 					<Heading>Feed</Heading>
-					<Grid columnGap={4} templateColumns={"repeat(3, 1fr)"}>
+					<Grid columnGap={5} templateColumns={"repeat(4, 1fr)"}>
 						<Toggle />
 
 						<IconButton
@@ -98,12 +102,21 @@ const Dashboard = () => {
 							icon={<SearchIcon />}
 							onClick={() => history.push("/search")}
 						/>
+						<IconButton
+							aria-label={"Logout"}
+							icon={<ExternalLinkIcon />}
+							onClick={()=>{
+								sessionStorage.clear();
+								history.push('/');
+								// no need to make another state for this
+							}}
+						/>
 					</Grid>
 				</Flex>
 				<Box w={"100%"}>
 					<Flex w={"100%"} justifyContent={"space-between"}>
 						<Flex>
-							<Heading textAlign={"left"}>Your Events</Heading>
+							<Heading textAlign={"left"}>{sessionStorage.getItem('username').substring(1,sessionStorage.getItem('username').length-1) || 'Your'}'s Events</Heading>
 							<Button ml={5}>View All</Button>
 						</Flex>
 						<Flex
@@ -139,9 +152,9 @@ const Dashboard = () => {
 					<Flex w={"100%"} justifyContent={"space-between"}>
 						<Flex>
 							<Heading textAlign={"left"}>
-								Popular near 11378
+								Popular near {sessionStorage.getItem('zip').substring(1,sessionStorage.getItem('zip').length-1)}
 							</Heading>
-							<Button ml={5}>View All</Button>
+							<Button ml={5} onClick={()=>history.push('/map')}>View All</Button>
 						</Flex>
 						<Flex
 							width={"10%"}

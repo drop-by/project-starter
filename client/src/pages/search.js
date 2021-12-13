@@ -17,10 +17,12 @@ import {
 	SearchIcon,
 	ChevronRightIcon,
 	ChevronLeftIcon,
+	ExternalLinkIcon,
+	HamburgerIcon,
 } from "@chakra-ui/icons";
+import { useHistory } from "react-router";
 import Toggle from "../common/components/ThemeToggle";
 import Results from "../common/components/Results";
-
 const fetchResults = async (url) => {
 	console.log(url);
 };
@@ -32,7 +34,7 @@ const SearchPage = () => {
 	const [data, setData] = useState(null);
 	const [isFiltered, setIsFiltered] = useState(false);
 	const [filteredData, setFilteredData] = useState(null);
-
+	const history = useHistory();
 	const handleSubmit = (e) => {
 		e.preventDefault();
 	};
@@ -55,14 +57,28 @@ const SearchPage = () => {
 					mt={12}
 				>
 					<Heading>Start Meetin'</Heading>
-					<Grid columnGap={4} templateColumns={"repeat(3, 1fr)"}>
+					<Grid columnGap={4} templateColumns={"repeat(4, 1fr)"}>
 						<Toggle />
 
 						<IconButton
 							aria-label={"Open Settings"}
 							icon={<SettingsIcon />}
+							// onClick={()=>{}}
 						/>
-						<IconButton aria-label={"Feed"} icon={<SearchIcon />} />
+						<IconButton
+							aria-label={"Event Listings"}
+							icon={<HamburgerIcon />}
+							onClick={()=>history.push('/dashboard')}
+							/>
+						<IconButton
+							aria-label={"Logout"}
+							icon={<ExternalLinkIcon />}
+							onClick={()=>{
+								sessionStorage.clear();
+								history.push('/');
+								// no need to make another state for this
+							}}
+						/>
 					</Grid>
 				</Flex>
 				<Form onSubmit={handleSubmit}>

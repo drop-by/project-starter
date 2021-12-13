@@ -8,7 +8,7 @@ const salt = bcrypt.genSaltSync(8);
 const updateInfo = (user) =>{
 	return {
 		'username':user.username,
-		'first_name':user .first_name,
+		'first_name':user.first_name,
 		'last_name':user.last_name,
 		'email':user.email,
 		'phone_number':user.phone_number,
@@ -25,25 +25,25 @@ const updateInfo = (user) =>{
 }
 		
 		
-function checkLogin(req){
-	if(req.session.login) return true; // incase of null, we need the if statement
-	return false;
-}
+// function checkLogin(req){
+// 	if(req.session.login) return true; // incase of null, we need the if statement
+// 	return false;
+// }
 function login(user,req){
-	if(checkLogin(req)) return {'msg':"You are already logged in."};
-	req.session.login = true;
-	req.session.user_id = user.user_id;
+	// if(checkLogin(req)) return {'msg':"You are already logged in."};
+	// req.session.login = true;
+	// req.session.user_id = user.user_id;
 	let userInfo = updateInfo(user);
-	req.session.user_info = userInfo;
-	return {'msg':"Logged in successfully.",'user_id':req.session.user_id,"user_info":req.session.user_info};
+	// req.session.user_info = userInfo;
+	return {'msg':"Logged in successfully.",user};
 }
-function logout(req){
-	if(!checkLogin(req)) return {'msg': 'You are not logged in.'};
-	req.session.login = false;
-	req.session.user_id = null;
-	req.session.user_info = null;
-	return {'msg': 'Logged out successfully'};
-}
+// function logout(req){
+// 	if(!checkLogin(req)) return {'msg': 'You are not logged in.'};
+// 	req.session.login = false;
+// 	req.session.user_id = null;
+// 	req.session.user_info = null;
+// 	return {'msg': 'Logged out successfully'};
+// }
 
 // Get list of users
 router.get("", async (req, res) => {
@@ -72,13 +72,13 @@ router.post("/login", async (req, res) => {
 		res.status(200).json(login(users,req));
 	}else res.status(204).json({'msg':'Incorrect password'});
 });
-router.get("/logout", async (req, res) => {
-	try{
-		res.json(logout(req));
-	}catch(err){
-		res.json({'msg': 'Cannot log out'});
-	}
-});
+// router.get("/logout", async (req, res) => {
+// 	try{
+// 		res.json(logout(req));
+// 	}catch(err){
+// 		res.json({'msg': 'Cannot log out'});
+// 	}
+// });
 // password needs to be hashed via bcrypt
 router.post("/sign_up", async (req, res) => {
 	let {
@@ -114,7 +114,7 @@ router.post("/sign_up", async (req, res) => {
 	];
 	for (let field of checkFor) {
 		if (await itemExists(field)) {
-			return res.status(400).json({
+			return res.status(203).json({
 				msg: `${field.value}: is already taken/used`,
 			});
 		}
