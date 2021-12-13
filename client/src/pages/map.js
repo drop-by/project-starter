@@ -1,9 +1,8 @@
 import React from "react";
 import axios from "axios";
-import { Text, Button, Heading } from "@chakra-ui/react";
+import { Textarea, Button, Stack } from "@chakra-ui/react";
 import { GoogleMap, useLoadScript, Marker, InfoWindow} from "@react-google-maps/api";
 import { SearchBar } from "../modules/layout";
-
 const libraries = ["places"];
 const google_env = 'AIzaSyBZNc6twCk1spCtVMLCEzldaNeSr5SUIKg';
 const mapContainerStyle = {
@@ -55,9 +54,9 @@ const Map = (props)=>{
         end_date: params.event_end,
         capacity: params.capacity,
         taken: params.taken,
-        is_online: params.is_online,
-        hit_capacity: params.hit_capacity,
-        requires_vac: params.requires_vac,
+        is_online: params.is_online || false,
+        hit_capacity: params.hit_capacity || false,
+        require_vac: params.require_vac || false,
         event_title: params.event_name,
         event_desc: params.event_desc,
       }
@@ -79,7 +78,6 @@ const Map = (props)=>{
   if(!isLoaded) return 'Loading';
   return (
     <React.Fragment>
-      <div style={{'color':'#00000'}}>
       <div style={{position: 'absolute',textAlign: 'center',zIndex: 2}}>
         <SearchBar latlng = {center} panTo = {panTo} addMarkers = {addMarkers}>
       </SearchBar></div>
@@ -89,7 +87,7 @@ const Map = (props)=>{
         center={center}
         options={options}
         onClick={(event)=>{
-          
+          setSelected(false);
           // setMarkers((current)=>[
           //   ...current,
           //     {
@@ -115,21 +113,34 @@ const Map = (props)=>{
             />
           ))}
           {selected ? (<InfoWindow position={{lat:selected.lat, lng:selected.lng}} onCloseClick={()=>setSelected(null)}>
-          <Text mt={2}>
-              <img style={{ marginTop: `2vh`, height: "25vh", width:"25vw" }} src = "https://www.transactis.com/wp-content/themes/unbound/images/No-Image-Found-400x264.png" alt="Not Found"/>
-              <br/><span style={{fontSize:'20px', fontWeight: "bolder"}}>{selected.event_title}</span><hr/>
-              <span style={{fontSize:'8px', fontstyle: "italic", color:'#999999', margin:0}}>{console.log(selected.start_date)}
+          <span style={{color:'#000000'}}>
+              <img style={{ marginTop: `1vh`, height: "25vh", width:"25vw"}} src = {selected.event_image} alt="Not Found"/>
+              <div style={{fontSize:'20px', fontWeight: "bolder",marginBottom: '1vh'}}>{selected.event_title}
+              <div style={{fontSize:'8px', fontstyle: "italic", color:'#999999'}}>
                 {getDate(selected.start_date)} - {getDate(selected.end_date)}
-              </span>
-              <h5>{selected.event_desc}</h5>
+              </div></div>
+              <Stack spacing={1} direction='row' align='center'>
+                {selected.require_vac ? <Button colorScheme='blue' variant='solid' width='110px' height='20px'>
+                  <span style={{fontSize:'10px'}}>Vaccination Required</span>
+                </Button> : <Button colorScheme='blue' variant='solid' width='110px' height='20px' disabled>
+                  <span style={{fontSize:'10px'}}>Vaccination Required</span>
+                </Button>}
+                {selected.is_online===true ? <Button colorScheme='blue' variant='solid' width='40px' height='20px'>
+                  <span style={{fontSize:'10px'}}>Online</span> 
+                </Button> : <Button colorScheme='blue' variant='solid' width='40px' height='20px' disabled>
+                  <span style={{fontSize:'10px'}}>Online</span>
+                </Button>}
+                
+              </Stack>
+              <Textarea style={{fontSize:'12px'}} readOnly placeholder={selected.event_desc}/>
               <hr/>
               <div style={{}}>
                   {selected.taken}/{selected.capacity} Attendees
               </div>
               <Button size='xs'>Submit</Button>
-            </Text>
+              </span>
           </InfoWindow>) : null}
-        </GoogleMap></div>
+        </GoogleMap>
         </React.Fragment>
     )
 }

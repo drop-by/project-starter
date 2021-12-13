@@ -94,6 +94,24 @@ router.post("/", async (req, res) => {
 			if (curr) query.push(curr.replace(/\s+/g, "%20"), "%20");
 		}
 		query.pop(); // removes the final '%20'
+		if(query.length===0 && is_online){
+			const createEvent = await event.create({
+				data: {
+					event_name,
+					event_desc,
+					is_online,
+					capacity,
+					taken,
+					event_start,
+					event_end,
+					event_image,
+					event_past,
+					require_vac,
+					creator,
+				},
+			});
+			return res.json(createEvent);
+		}
 		query.push("&apiKey=");
 		query.push(geolocation_key);
 		query = query.join("");

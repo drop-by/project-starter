@@ -17,15 +17,15 @@ import superagent from "superagent";
 import { useHistory } from "react-router";
 const backendHost = 'http://localhost:8080/';
 const LoginPage = () => {
-	if(sessionStorage.getItem('user_id')){
-		sessionStorage.clear();
-	}
+	
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [invalidLogin, setInvalidLogin] = useState(false);
-	// const [loginStatus, setLogin] = useState(false);
 	const history = useHistory();
+	if(sessionStorage.getItem('user_id')){
+		history.push("/dashboard");
+	}
 	const validateLogin = async (email,password)=>{
 		const login_attempt = await axios({
 			method:'POST',
@@ -41,9 +41,7 @@ const LoginPage = () => {
 				setIsSubmitting(false);
 				res = res.data;
 				for(let i in res){
-					console.log(i, res[i]);
 					window.sessionStorage.setItem(i, JSON.stringify(res[i]));
-					
 				}
 				
 				// const resp = await superagent.post("/api/user/session");

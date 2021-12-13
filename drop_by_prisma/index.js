@@ -19,7 +19,7 @@ app.get('/',(req,res)=>{
 })
 
 app.listen({ port: 8080 }, async () => {
-    console.log('Server up on http://localhost:8000')
+    console.log('Server up on http://localhost:8080')
     console.log('Connected!')
 });
 /*

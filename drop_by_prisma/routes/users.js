@@ -59,22 +59,18 @@ router.get("", async (req, res) => {
 		return res.status(500).json(err);
 	}
 });
-router.get("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
 	let { user_identification, password } = req.body;
-	try{
-		const users = await user.findFirst({
-			where: {
-				OR: [{ user_id: user_identification }, { username: user_identification }],
-			},
-		});
-		if(!users) return res.json({ msg: "Username/email is not found" });
-		password = bcrypt.compareSync(password,users.password);
-		if(password){
-			res.json(login(users,req));
-		}else return {'msg':'Incorrect password'};
-	}catch(err){
-		res.json({'msg': 'Login failed'});
-	}
+	const users = await user.findFirst({
+		where: {
+			OR: [{ email: user_identification }, { username: user_identification }],
+		},
+	});
+	if(!users) res.status(204).json({ 'msg': "Username/email is not found" });
+	password = bcrypt.compareSync(password,users.password);
+	if(password){
+		res.status(200).json(login(users,req));
+	}else res.status(204).json({'msg':'Incorrect password'});
 });
 router.get("/logout", async (req, res) => {
 	try{

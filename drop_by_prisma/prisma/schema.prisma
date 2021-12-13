@@ -54,7 +54,7 @@ model Event{
   event_end DateTime
   event_image String?
   past Boolean @default(false)
-  require_vac Boolean?
+  require_vac Boolean? @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   User User @relation(fields: [creator], references: [user_id])
