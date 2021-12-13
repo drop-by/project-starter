@@ -1,11 +1,11 @@
 import React from "react";
 import axios from "axios";
-// import {Button} from "@chakra-ui/react";
+import { Text, Button, Heading } from "@chakra-ui/react";
 import { GoogleMap, useLoadScript, Marker, InfoWindow} from "@react-google-maps/api";
 import { SearchBar } from "../modules/layout";
 
 const libraries = ["places"];
-const google_env = "googleMapsApiKey";
+const google_env = 'AIzaSyBZNc6twCk1spCtVMLCEzldaNeSr5SUIKg';
 const mapContainerStyle = {
   height: "100vh",
   width: "100vw",
@@ -115,7 +115,7 @@ const Map = (props)=>{
             />
           ))}
           {selected ? (<InfoWindow position={{lat:selected.lat, lng:selected.lng}} onCloseClick={()=>setSelected(null)}>
-            <div>
+          <Text mt={2}>
               <img style={{ marginTop: `2vh`, height: "25vh", width:"25vw" }} src = "https://www.transactis.com/wp-content/themes/unbound/images/No-Image-Found-400x264.png" alt="Not Found"/>
               <br/><span style={{fontSize:'20px', fontWeight: "bolder"}}>{selected.event_title}</span><hr/>
               <span style={{fontSize:'8px', fontstyle: "italic", color:'#999999', margin:0}}>{console.log(selected.start_date)}
@@ -125,13 +125,9 @@ const Map = (props)=>{
               <hr/>
               <div style={{}}>
                   {selected.taken}/{selected.capacity} Attendees
-
               </div>
-              
-
-              <button>hgel</button>
-
-            </div>
+              <Button size='xs'>Submit</Button>
+            </Text>
           </InfoWindow>) : null}
         </GoogleMap></div>
         </React.Fragment>

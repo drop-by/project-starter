@@ -2,6 +2,7 @@ import React from "react";
 import usePlacesAutoComplete, {getGeocode, getLatLng} from 'use-places-autocomplete';
 import {Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption} from '@reach/combobox';
 import "@reach/combobox/styles.css";
+import { Input } from '@chakra-ui/react'
 function SearchBar(props){
     const {ready, value, suggestions: {status, data}, setValue, clearSuggestions} = usePlacesAutoComplete({
         requestOptions:{

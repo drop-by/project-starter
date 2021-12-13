@@ -6,7 +6,7 @@ import {BaseButton} from "../../common/components";
 const Hero = () => {
     return (
         <HeroContainer>
-            <Announcement text={"October Events 2021"} link={"/test"} icon={"/images/logoWhite.svg"} />
+            <Announcement text={"December Events 2021"} link={"/test"} icon={"/images/logoWhite.svg"} />
             <h1>
                 The event app you'll actually want to use
             </h1>

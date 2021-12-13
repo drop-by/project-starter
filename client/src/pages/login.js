@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import axios from 'axios';
 import { Layout } from "../modules/layout";
+// import Session from 'react-session-api'		
 import {
 	Stack,
 	Button,
@@ -9,25 +11,50 @@ import {
 	Input,
 	FormHelperText,
 	FormLabel,
+	Text
 } from "@chakra-ui/react";
 import superagent from "superagent";
 import { useHistory } from "react-router";
-
+const backendHost = 'http://localhost:8080/';
 const LoginPage = () => {
+	if(sessionStorage.getItem('user_id')){
+		sessionStorage.clear();
+	}
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [invalidLogin, setInvalidLogin] = useState(false);
+	// const [loginStatus, setLogin] = useState(false);
 	const history = useHistory();
-
-	const handleSubmit = async (e) => {
+	const validateLogin = async (email,password)=>{
+		const login_attempt = await axios({
+			method:'POST',
+			url: `${backendHost}users/login`,
+			data:{
+				user_identification: email,
+				password: password
+			}
+		}).then((res)=>{
+			if(res.status==204){
+				setInvalidLogin(true);
+			}else if(res.status==200){
+				setIsSubmitting(false);
+				res = res.data;
+				for(let i in res){
+					console.log(i, res[i]);
+					window.sessionStorage.setItem(i, JSON.stringify(res[i]));
+					
+				}
+				
+				// const resp = await superagent.post("/api/user/session");
+				history.push("/dashboard");
+			}
+		});
+	}
+	const handleSubmit = (e) => {
 		e.preventDefault();
-		setIsSubmitting(true);
-
-		// const resp = await superagent.post("/api/user/session");
-
-		history.push("/dashboard");
+		validateLogin(email,password);		
 	};
-
 	return (
 		<Layout>
 			<Stack
@@ -66,9 +93,12 @@ const LoginPage = () => {
 						color={"white"}
 						isLoading={isSubmitting}
 						type="submit"
+						// onClick={()=>{
+						// }}
 					>
 						Submit
 					</Button>
+					{invalidLogin && <Text color={"red"}>Invalid Login</Text>}
 				</Form>
 			</Stack>
 		</Layout>

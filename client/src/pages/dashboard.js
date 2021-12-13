@@ -13,6 +13,7 @@ import EventCard from "../modules/dashboard/components/EventCard";
 import superagent from "superagent";
 import TempData from "../modules/dashboard/eventData.json";
 import { useHistory } from "react-router";
+// import Session from 'react-session-api'
 
 const Dashboard = () => {
 	const history = useHistory();
