@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import axios from 'axios';
 import { Layout } from "../modules/layout";
-// import Session from 'react-session-api'		
+
 import {
 	Stack,
 	Button,
@@ -20,8 +20,8 @@ const backendHost = 'http://localhost:8080/';
 const LoginPage = () => {
 	
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+	const [email, setEmail] = useState();
+	const [password, setPassword] = useState();
 	const [invalidLogin, setInvalidLogin] = useState(false);
 	const history = useHistory();
 	if(sessionStorage.getItem('user_id')){

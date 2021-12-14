@@ -4,7 +4,7 @@ import { Textarea, Button, Stack } from "@chakra-ui/react";
 import { GoogleMap, useLoadScript, Marker, InfoWindow} from "@react-google-maps/api";
 import { SearchBar } from "../modules/layout";
 const libraries = ["places"];
-const google_env = 'googleAPIKeyHere';
+const google_env = 'enter your api key here';
 const mapContainerStyle = {
   height: "100vh",
   width: "100vw",

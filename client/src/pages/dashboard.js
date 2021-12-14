@@ -4,7 +4,7 @@ import { Stack, Box, Heading, Flex, Grid } from "@chakra-ui/layout";
 import Toggle from "../common/components/ThemeToggle";
 import { Button, IconButton } from "@chakra-ui/button";
 import {
-	SettingsIcon,
+	PlusSquareIcon,
 	SearchIcon,
 	ChevronRightIcon,
 	ChevronLeftIcon,
@@ -94,8 +94,9 @@ const Dashboard = () => {
 						<Toggle />
 
 						<IconButton
-							aria-label={"Open Settings"}
-							icon={<SettingsIcon />}
+							aria-label={"Create Event"}
+							icon={<PlusSquareIcon />}
+							onClick={()=>{history.push('/createEvent')}}
 						/>
 						<IconButton
 							aria-label={"Search for events"}

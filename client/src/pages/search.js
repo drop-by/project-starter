@@ -13,7 +13,7 @@ import {
 import { Layout } from "../modules/layout";
 import { Button, IconButton } from "@chakra-ui/button";
 import {
-	SettingsIcon,
+	PlusSquareIcon,
 	SearchIcon,
 	ChevronRightIcon,
 	ChevronLeftIcon,
@@ -61,9 +61,9 @@ const SearchPage = () => {
 						<Toggle />
 
 						<IconButton
-							aria-label={"Open Settings"}
-							icon={<SettingsIcon />}
-							// onClick={()=>{}}
+							aria-label={"Create Event"}
+							icon={<PlusSquareIcon />}
+							onClick={()=>{history.push('/createEvent')}}
 						/>
 						<IconButton
 							aria-label={"Event Listings"}

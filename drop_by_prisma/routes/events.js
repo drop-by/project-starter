@@ -110,19 +110,24 @@ router.post("/", async (req, res) => {
 					creator,
 				},
 			});
+			// case of event is online and no address is needed
 			return res.json(createEvent);
 		}
 		query.push("&apiKey=");
 		query.push(geolocation_key);
 		query = query.join("");
+		console.log(query);
 		if (query !== "") {
 			await fetch(query, req_method)
 				.then((res) => res.json())
 				.then((res) => {
 					if (res.statusCode) throw { msg: res.message };
-					event_long = String(res.features[0].properties.lon);
-					event_lat = String(res.features[0].properties.lat);
+					event_long = String(res.features[0]?.properties?.lon) || undefined;
+					event_lat = String(res.features[0]?.properties?.lat) || undefined;
 				});
+		}
+		if(event_long=='undefined' || event_lat=='undefined'){
+			throw {'msg':'Invalid Address Format'};
 		}
 		const createEvent = await event.create({
 			data: {
@@ -149,7 +154,7 @@ router.post("/", async (req, res) => {
 		res.json(createEvent);
 	} catch (err) {
 		console.log(err);
-		return res.status(500).json(err);
+		return res.status(203).json(err);
 	}
 });
 // get all events that a user partipated in
@@ -181,7 +186,7 @@ router.get("/:event_id/partipants", async (req, res) => {
 		return res.json(users_info);
 	} catch (err) {
 		console.log(err);
-		return res.status(500).json(err);
+		return res.status(204).json(err);
 	}
 });
 

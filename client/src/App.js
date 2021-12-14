@@ -11,6 +11,7 @@ import "./App.css";
 import DashboardPage from "./pages/dashboard";
 import SearchPage from "./pages/search";
 import SignupPage from "./pages/signup";
+import CreateEventPage from "./pages/createEvent";
 
 const App = () => {
 	return (
@@ -21,6 +22,7 @@ const App = () => {
 						<Route exact path="/" component={LandingPage} />
 						<Route exact path="/login" component={LoginPage} />
 						<Route exact path="/signup" component={SignupPage} />
+						<Route exact path="/createEvent" component={CreateEventPage} />
 						<Route
 							exact
 							path="/dashboard"
